@@ -30,7 +30,7 @@ const Movies = () => {
         </Row>
         <hr />
         {
-            isLogin === true ? (<><MovieTable movies={movies} /></>) : (<><MovieList movies={movies} /></>)
+            isLogin === true ? (<><MovieTable /></>) : (<><MovieList movies={movies} /></>)
         }
         </>
     )

@@ -24,7 +24,7 @@ const Home = () => {
                             <Nav.Link as={NavLink} to={`${url}/games`} className="text-danger">Games</Nav.Link>
                             {
                                 isLogin === false ? (<></>) : (
-                                    <Nav.Link as={NavLink} to={`${url}/games/create`} className="text-danger">Add New Movies</Nav.Link>
+                                    <Nav.Link as={NavLink} to={`${url}/games/create`} className="text-danger">Add New Games</Nav.Link>
                                 )
                             }
                         </Nav>

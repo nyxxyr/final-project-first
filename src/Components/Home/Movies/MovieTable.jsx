@@ -2,12 +2,13 @@ import Axios from 'axios'
 import React, { useContext, useState } from 'react'
 import { DataContext } from '../../../Logic/DataContext'
 import { UserContext } from '../../../Logic/UserContext'
-import { Row, Col, Table, Image, Button, Form } from 'react-bootstrap'
+import { Row, Col, Table, Image, Button, Form, Collapse } from 'react-bootstrap'
 import { NavLink, useRouteMatch } from 'react-router-dom'
 
 const MovieTable = () => {
     const [api, user] = useContext(UserContext)
     const [movies, setMovies] = useContext(DataContext)
+    const [open, setOpen] = useState(false)
     const [keywords, setKeywords] = useState('')
     const [filter, setFilter] = useState({
         year: 0,
@@ -77,6 +78,43 @@ const MovieTable = () => {
         })
     }
 
+    const handleSort = (e) => {
+        let temp = movies
+        switch(e.target.value){
+            case 'title':
+                temp = temp.sort((a, b) => (a.title > b.title ? 1 : -1))
+                setMovies([...temp])
+                break
+            case 'image':
+                temp = temp.sort((a, b) => (a.image_url > b.image_url ? 1 : -1))
+                setMovies([...temp])
+                break
+            case 'description':
+                temp = temp.sort((a, b) => (a.description > b.description ? 1 : -1))
+                setMovies([...temp])
+                break
+            case 'year':
+                temp = temp.sort((a, b) => (a.year > b.year ? 1 : -1))
+                setMovies([...temp])
+                break
+            case 'genre':
+                temp = temp.sort((a, b) => (a.genre > b.genre ? 1 : -1))
+                setMovies([...temp])
+                break
+            case 'duration':
+                temp = temp.sort((a, b) => (a.duration > b.duration ? 1 : -1))
+                setMovies([...temp])
+                break
+            case 'rating':
+                temp = temp.sort((a, b) => (a.rating > b.rating ? 1 : -1))
+                setMovies([...temp])
+                break
+            default:
+                break
+
+        }
+    }   
+
     const handleDelete = (e) => {
         e.preventDefault()
         let choice = window.confirm('Are You Sure ?')
@@ -133,32 +171,34 @@ const MovieTable = () => {
                         <Form onSubmit={handleFilterSubmit}>
                             <Row className="form-group">
                                 <Col>
-                                    <h5>Filter Data (minimal)</h5>
+                                    <h5><Button variant="link" onClick={() => setOpen(!open)}>Filter (reset before using again)</Button></h5>
                                 </Col>
                             </Row>
-                            <Row>
-                                <Col xs={3}>
-                                    <Form.Group controlId="exampleForm.ControlInput1">
-                                        <Form.Control onChange={handleFilterInput} name="duration" type="number" placeholder="Duration" />
-                                    </Form.Group>
-                                </Col>
-                                <Col xs={3}>
-                                    <Form.Group controlId="exampleForm.ControlInput1">
-                                        <Form.Control onChange={handleFilterInput} name="rating" type="number" placeholder="Rating" />
-                                    </Form.Group>
-                                </Col>
-                                <Col xs={3}>
-                                    <Form.Group controlId="exampleForm.ControlInput1">
-                                        <Form.Control onChange={handleFilterInput} name="year" type="number" placeholder="Year" />
-                                    </Form.Group>
-                                </Col>
-                                <Col xs={1}>
-                                    <Button type="submit" block variant="success">Filter</Button>
-                                </Col>
-                                <Col xs={2}>
-                                    <Button onClick={handleResetAll} variant="danger" block>Reset All</Button>
-                                </Col>
-                            </Row>
+                            <Collapse in={open}>
+                                <Row>
+                                    <Col xs={3}>
+                                        <Form.Group controlId="exampleForm.ControlInput1">
+                                            <Form.Control onChange={handleFilterInput} name="duration" type="number" placeholder="Duration" />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col xs={3}>
+                                        <Form.Group controlId="exampleForm.ControlInput1">
+                                            <Form.Control onChange={handleFilterInput} name="rating" type="number" placeholder="Rating" />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col xs={3}>
+                                        <Form.Group controlId="exampleForm.ControlInput1">
+                                            <Form.Control onChange={handleFilterInput} name="year" type="number" placeholder="Year" />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col xs={1}>
+                                        <Button type="submit" block variant="success">Filter</Button>
+                                    </Col>
+                                    <Col xs={2}>
+                                        <Button onClick={handleResetAll} variant="danger" block>Reset All</Button>
+                                    </Col>
+                                </Row>
+                            </Collapse>
                         </Form>
                     </Col>
                 </Row>
@@ -166,15 +206,15 @@ const MovieTable = () => {
                     <Col>
                         <Table responsive>
                             <thead>
-                                <tr>
+                                <tr style={{fontSize: '14px'}}>
                                     <th>No.</th>
-                                    <th>Title</th>
-                                    <th>Image</th>
-                                    <th>Description</th>
-                                    <th>Year</th>
-                                    <th>Genre</th>
-                                    <th>Duration</th>
-                                    <th>Rating</th>
+                                    <th>Title <Button onClick={handleSort} size="sm" variant="link" value="title">^</Button></th>
+                                    <th>Image <Button onClick={handleSort} size="sm" variant="link" value="image">^</Button></th>
+                                    <th>Description <Button onClick={handleSort} size="sm" variant="link" value="description">^</Button></th>
+                                    <th>Year <Button onClick={handleSort} size="sm" variant="link" value="year">^</Button></th>
+                                    <th>Genre <Button onClick={handleSort} size="sm" variant="link" value="genre">^</Button></th>
+                                    <th>Duration <Button onClick={handleSort} size="sm" variant="link" value="duration">^</Button></th>
+                                    <th>Rating <Button onClick={handleSort} size="sm" variant="link" value="rating">^</Button></th>
                                     <th colSpan={2} className="text-center">Action</th>
                                 </tr>
                             </thead>

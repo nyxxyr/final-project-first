@@ -1,11 +1,13 @@
-import React, { useContext } from 'react'
-import { Switch, Route, useParams } from 'react-router-dom'
+import React from 'react'
+import { Switch, Route } from 'react-router-dom'
 
 import Movies from './Movies'
 import MovieDetail from './Movies/MovieDetail'
-import Games from './Games'
-import { DataContext } from '../../Logic/DataContext'
 import MovieEditor from './Movies/MovieEditor'
+
+import Games from './Games'
+import GameDetail from './Games/GameDetail'
+import GameEditor from './Games/GameEditor'
 
 const ItemRoutes  = (props) => {
     return(
@@ -23,8 +25,19 @@ const ItemRoutes  = (props) => {
             <Route path={`${props.path}/movies/:mode/:id`}>
                 <MovieEditor />
             </Route>
-            <Route path={`${props.path}/games`}>
+            <Route exact path={`${props.path}/games`}>
                 <Games />
+            </Route>
+            <Route path={`${props.path}/games/detail/:id`}>
+                <Games />
+                <p>bla</p>
+                <GameDetail />
+            </Route>
+            <Route exact path={`${props.path}/games/:mode`}>
+                <GameEditor />
+            </Route>
+            <Route path={`${props.path}/games/:mode/:id`}>
+                <GameEditor />
             </Route>
         </Switch>
     )
